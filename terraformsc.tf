@@ -103,8 +103,7 @@ resource "aws_instance" "ec2-terraform" {
   }
 }
 
-
-#Creating a Private Subnet
+#Creating a Private Subnet 
 resource "aws_subnet" "privatesubnet"{
     vpc_id = aws_vpc.newvpc.id
     availability_zone = "us-east-1a"
@@ -118,7 +117,7 @@ resource "aws_db_subnet_group" "db_subnet_group" {
 }
 
 resource "aws_db_instance" "db_instance" {
-  allocated_storage    = 20
+  allocated_storage    = 30
   engine               = "mysql"
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
@@ -134,12 +133,12 @@ resource "aws_security_group" "db_security_group" {
   name        = "db-security-group"
   description = "Allow inbound connections to the RDS instance"
 
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = aws_vpc.newvpc.id
 
   ingress {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["10.0.1.0/16"]
   }
 }
